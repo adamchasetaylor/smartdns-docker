@@ -1,0 +1,25 @@
+version: "3"
+services:
+  proxy:
+    build: docker-proxy/.
+    image: adam/proxy
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PROXY_SERVER=australia
+      - PROXY_PORT=8080
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      network_dns:   
+        ipv4_address: 172.19.0.16
+    expose:
+      - "80"
+      - "443"
+networks:
+  network_dns:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
